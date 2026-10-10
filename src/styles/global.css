@@ -117,6 +117,7 @@ p { margin: 0 0 1em; }
 
 /* Sections */
 section { padding: clamp(64px, 9vw, 112px) 0; }
+main > section + section { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .88rem; color: var(--muted); border: 1px solid var(--line); background: var(--card); padding: 6px 14px; border-radius: 999px; margin-bottom: 18px; }
 .eyebrow b { width: 8px; height: 8px; border-radius: 50%; background: var(--wa); box-shadow: 0 0 0 4px rgba(37, 211, 102, .18); }
 .head { max-width: 680px; margin-bottom: 44px; }
@@ -237,7 +238,7 @@ section { padding: clamp(64px, 9vw, 112px) 0; }
 /* Footer */
 .ftr { border-top: 1px solid var(--line); padding: 48px 0 110px; color: var(--muted); font-size: .94rem; }
 .ftr .wrap { display: grid; gap: 28px; grid-template-columns: 1.4fr 1fr 1fr; }
-.ftr h3 { color: var(--text); font-size: 1rem; }
+.ftr h2 { color: var(--text); font-size: 1rem; }
 .ftr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
 .ftr a { text-decoration: none; }
 .ftr a:hover { color: var(--text); }
