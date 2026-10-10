@@ -1,0 +1,9 @@
+---
+import WaIcon from './WaIcon.astro';
+import { waLink } from '../data/site';
+interface Props { text?: string; label?: string; size?: 'sm' | 'lg'; msg?: string }
+const { label = 'تواصل معنا عبر واتساب', size = 'lg', msg } = Astro.props;
+---
+<a class:list={['btn btn-wa', size === 'sm' && 'btn-sm']} href={waLink(msg)} target="_blank" rel="noopener" data-wa>
+  <WaIcon />{label}
+</a>

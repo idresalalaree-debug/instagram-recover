@@ -1,0 +1,87 @@
+---
+import Base from '../../layouts/Base.astro';
+import Wa from '../../components/Wa.astro';
+import Faq from '../../components/Faq.astro';
+import { getCollection, render } from 'astro:content';
+import { SITE } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, all: posts } }));
+}
+const { post, all } = Astro.props;
+const { Content, headings } = await render(post);
+const d = post.data;
+const url = `${SITE.url}/blog/${post.id}/`;
+const fmt = (x: Date) => x.toLocaleDateString('ar', { year: 'numeric', month: 'long', day: 'numeric' });
+const related = all.filter((p) => p.id !== post.id).slice(0, 3);
+const toc = headings.filter((h) => h.depth === 2);
+
+const schema: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: d.title,
+    description: d.description,
+    inLanguage: 'ar',
+    mainEntityOfPage: url,
+    datePublished: d.date.toISOString(),
+    dateModified: (d.updated ?? d.date).toISOString(),
+    image: `${SITE.url}/og.png`,
+    author: { '@id': `${SITE.url}/#org` },
+    publisher: { '@id': `${SITE.url}/#org` },
+    about: d.keyword,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: SITE.url + '/' },
+      { '@type': 'ListItem', position: 2, name: 'المقالات', item: SITE.url + '/blog/' },
+      { '@type': 'ListItem', position: 3, name: d.title, item: url },
+    ],
+  },
+];
+if (d.faq.length)
+  schema.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  });
+---
+<Base title={`${d.title} | انستقرام ركيفري`} description={d.description} schema={schema} type="article">
+  <section style="padding-top:40px">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="مسار التنقل">
+        <ol><li><a href="/">الرئيسية</a></li><li><a href="/blog/">المقالات</a></li><li aria-current="page">{d.keyword}</li></ol>
+      </nav>
+      <article class="prose">
+        <h1>{d.title}</h1>
+        <p class="meta"><span>آخر تحديث: <time datetime={(d.updated ?? d.date).toISOString()}>{fmt(d.updated ?? d.date)}</time></span><span>فريق انستقرام ركيفري</span></p>
+        <p class="muted" style="font-size:1.15rem">{d.description}</p>
+        <div class="inline-cta"><p>تريد حلًا أسرع؟ أرسل حالتك ونخبرك بفرص الاسترجاع.</p><Wa size="sm" label="اسألنا على واتساب" msg={`مرحبًا، قرأت مقال "${d.title}" وأحتاج مساعدة في حسابي`} /></div>
+        {toc.length > 2 && (
+          <nav aria-label="محتويات المقال" class="card" style="margin-bottom:2em">
+            <strong>محتويات المقال</strong>
+            <ol style="margin:.6em 0 0">{toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+          </nav>
+        )}
+        <Content />
+        {d.faq.length > 0 && (<><h2>أسئلة شائعة</h2><Faq items={d.faq} /></>)}
+        <div class="banner" style="margin-top:3em">
+          <h2>ما زلت لا تستطيع الدخول إلى حسابك؟</h2>
+          <p>راسلنا الآن بوصف مختصر واسم المستخدم، ونرد عليك بتقييم صريح لحالتك.</p>
+          <div class="cta"><Wa label="تواصل معنا عبر واتساب" /></div>
+        </div>
+      </article>
+      <aside style="margin-top:64px" aria-label="مقالات ذات صلة">
+        <h2>مقالات ذات صلة</h2>
+        <div class="grid">
+          {related.map((p) => (
+            <article class="card"><h3><a href={`/blog/${p.id}/`} style="text-decoration:none">{p.data.title}</a></h3><p>{p.data.description}</p></article>
+          ))}
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>

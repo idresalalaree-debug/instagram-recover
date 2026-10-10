@@ -1,0 +1,170 @@
+---
+import Base from '../layouts/Base.astro';
+import Wa from '../components/Wa.astro';
+import Faq from '../components/Faq.astro';
+import { getCollection } from 'astro:content';
+import { FAQ_CORE } from '../data/faq';
+import { SITE } from '../data/site';
+
+const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 6);
+
+const services = [
+  { t: 'استرجاع حساب انستقرام معطل', d: 'حسابك عُطّل بسبب "مخالفة" لم ترتكبها؟ نجهّز اعتراضًا صحيحًا يزيد فرصة إعادة الحساب.', href: '/blog/disabled-instagram-account/', i: '<circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/>' },
+  { t: 'استرجاع حساب مخترق', d: 'غيّر المخترق الإيميل والرقم وكلمة السر؟ نتحرك فورًا عبر مسارات الاسترجاع والتحقق من الهوية.', href: '/blog/hacked-instagram-account/', i: '<path d="M12 3 4 6v6c0 4.5 3.4 8.2 8 9 4.6-.8 8-4.5 8-9V6z"/><path d="m9.5 9.5 5 5m0-5-5 5"/>' },
+  { t: 'حساب موقوف أو معلّق', d: 'ظهرت لك رسالة "تم تعليق حسابك" ومهلة للاعتراض؟ لا تضيّع الوقت، نراجع الحالة ونقدّم الطعن.', href: '/blog/suspended-instagram-account/', i: '<rect x="5" y="4" width="4" height="16" rx="1"/><rect x="15" y="4" width="4" height="16" rx="1"/>' },
+  { t: 'بدون إيميل أو رقم هاتف', d: 'فقدت الوصول إلى البريد والرقم المرتبطين؟ هناك طرق للتحقق من ملكيتك للحساب.', href: '/blog/recover-without-email-or-phone/', i: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/><path d="m4 20 16-16"/>' },
+  { t: 'فقدان التحقق بخطوتين', d: 'تغيّر هاتفك أو حُذف تطبيق المصادقة ولا يصلك الرمز؟ نوصلك لحسابك بالطريقة الصحيحة.', href: '/blog/two-factor-authentication-lost/', i: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M10 6h4M12 17v.01"/>' },
+  { t: 'حساب منتحل أو مسروق الهوية', d: 'شخص ينتحل اسمك أو علامتك التجارية؟ نساعدك في الإبلاغ وحماية حسابك الأصلي.', href: '/blog/instagram-impersonation/', i: '<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M17 4a4 4 0 0 1 0 8M19 15c2 .8 3 2.6 3 6"/>' },
+];
+
+const steps = [
+  { t: 'راسلنا على واتساب', d: 'اكتب اسم المستخدم ونوع المشكلة وأرفق لقطة شاشة لرسالة الخطأ.' },
+  { t: 'تقييم صريح للحالة', d: 'نخبرك بفرص الاسترجاع والمسار المناسب والسعر قبل أي التزام.' },
+  { t: 'تنفيذ خطة الاسترجاع', d: 'نتابع معك كل خطوة: الاعتراض، التحقق من الهوية، والتواصل مع الدعم.' },
+  { t: 'استلام وتأمين الحساب', d: 'بعد عودة الحساب نؤمّنه بالتحقق بخطوتين حتى لا يتكرر ما حدث.' },
+];
+
+const why = [
+  { t: 'رد سريع', d: 'التواصل مباشر على واتساب بدون نماذج ولا انتظار.' },
+  { t: 'صراحة قبل كل شيء', d: 'إن كانت حالتك ضعيفة نقولها لك، ولا نأخذ مالك على وعد غير واقعي.' },
+  { t: 'خصوصية تامة', d: 'لا نطلب إلا ما تحتاجه حالتك، ولا نشارك بياناتك مع أحد.' },
+  { t: 'خبرة بكل الحالات', d: 'معطل، مخترق، موقوف، منتحل، أو فقدت الإيميل والرقم معًا.' },
+];
+
+const title = 'استرجاع حساب انستقرام المعطل والمخترق | انستقرام ركيفري';
+const description = 'استرجع حسابك على انستقرام سواء كان معطلًا أو مخترقًا أو موقوفًا أو بدون إيميل ورقم. تقييم صريح لحالتك وتواصل فوري عبر واتساب. خدمة لكل الدول العربية.';
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'استرجاع حسابات انستقرام',
+    serviceType: 'Instagram account recovery',
+    provider: { '@id': `${SITE.url}/#org` },
+    areaServed: 'الدول العربية',
+    availableChannel: { '@type': 'ServiceChannel', serviceUrl: SITE.url + '/', servicePhone: SITE.phone },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'خدمات الاسترجاع',
+      itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.t, description: s.d, url: SITE.url + s.href } })),
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ_CORE.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Base title={title} description={description} schema={schema}>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow rise"><b></b>متاحون الآن على واتساب</p>
+        <h1 class="rise">استرجاع حساب <span class="grad">انستقرام</span> المعطل أو المخترق</h1>
+        <p class="lead rise">حسابك عُطّل، أو اخترقه أحد وغيّر الإيميل والرقم، أو لم تعد تستطيع الدخول؟ أرسل لنا حالتك الآن، ونخبرك بصراحة بفرص استرجاعه وأسرع طريق لذلك.</p>
+        <div class="cta rise">
+          <Wa label="ابدأ استرجاع حسابك الآن" />
+          <a class="btn btn-ghost" href="#services">ما الحالات التي نعالجها؟</a>
+        </div>
+        <ul class="ticks rise">
+          <li>تقييم الحالة قبل أي التزام</li>
+          <li>لكل الدول العربية</li>
+          <li>خصوصية تامة</li>
+        </ul>
+      </div>
+      <div class="orb" aria-hidden="true">
+        <span class="ring r2"></span>
+        <span class="ring"></span>
+        <div class="avatar">
+          <svg viewBox="0 0 64 64" fill="none">
+            <style>.lock-sh{transform-box:fill-box}</style>
+            <defs><linearGradient id="hg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f58529"/><stop offset=".5" stop-color="#dd2a7b"/><stop offset="1" stop-color="#8134af"/></linearGradient></defs>
+            <path class="lock-sh" d="M21 28v-8a11 11 0 0 1 22 0v8" stroke="url(#hg)" stroke-width="5" stroke-linecap="round"/>
+            <rect x="12" y="28" width="40" height="30" rx="9" fill="url(#hg)"/>
+            <circle cx="32" cy="41" r="4" fill="#07070d"/><path d="M32 44v6" stroke="#07070d" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="chip c1"><i></i>تم استرجاع الحساب</span>
+        <span class="chip c2"><i></i>جاري التحقق من الهوية</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>كل حالات <span class="grad">استرجاع حساب انستقرام</span></h2>
+        <p>اختر الحالة الأقرب لمشكلتك لتعرف ما يحدث وما الذي يمكن فعله، أو راسلنا مباشرة ونحدد الحالة معك.</p>
+      </div>
+      <div class="grid">
+        {services.map((s) => (
+          <article class="card reveal">
+            <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true" set:html={s.i} /></div>
+            <h3>{s.t}</h3>
+            <p>{s.d}</p>
+            <a class="more" href={s.href}>اعرف التفاصيل<span class="sr">: {s.t}</span></a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>كيف نسترجع حسابك في <span class="grad">٤ خطوات</span></h2>
+        <p>بدون تعقيد: كل شيء يتم عبر محادثة واتساب واحدة.</p>
+      </div>
+      <ol class="steps">
+        {steps.map((s) => <li class="reveal"><h3>{s.t}</h3><p>{s.d}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head reveal"><h2>لماذا <span class="grad">انستقرام ركيفري</span>؟</h2></div>
+      <div class="grid">
+        {why.map((w) => <div class="card reveal"><h3>{w.t}</h3><p>{w.d}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="banner reveal">
+        <h2>كل ساعة تأخير تقلل فرصة الاسترجاع</h2>
+        <p>خاصة في حالات الاختراق ومهل الاعتراض. أرسل حالتك الآن ونرد عليك مباشرة.</p>
+        <div class="cta"><Wa label="راسلنا على واتساب" /></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>الأسئلة الشائعة</h2>
+        <p>إجابات مختصرة عن أكثر ما يسأل عنه أصحاب الحسابات. <a href="/faq/">كل الأسئلة</a></p>
+      </div>
+      <Faq items={FAQ_CORE.slice(0, 10)} open />
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>أدلة ومقالات</h2>
+        <p>شروحات عملية لكل مشكلة، مكتوبة بخطوات واضحة.</p>
+      </div>
+      <div class="grid">
+        {posts.map((p) => (
+          <article class="card reveal">
+            <h3><a href={`/blog/${p.id}/`} style="text-decoration:none">{p.data.title}</a></h3>
+            <p>{p.data.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

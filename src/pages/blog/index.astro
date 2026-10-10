@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../../data/site';
+const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
+const schema = [{
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'مقالات استرجاع حساب انستقرام',
+  url: SITE.url + '/blog/',
+  hasPart: posts.map((p) => ({ '@type': 'Article', headline: p.data.title, url: `${SITE.url}/blog/${p.id}/` })),
+}];
+---
+<Base title="مقالات وأدلة استرجاع حساب انستقرام | انستقرام ركيفري" description="أدلة عملية بالعربي لاسترجاع حساب انستقرام المعطل والمخترق والموقوف والمحذوف، واسترجاعه بدون إيميل أو رقم، وحمايته من الاختراق." schema={schema}>
+  <section style="padding-top:48px">
+    <div class="wrap">
+      <div class="head"><h1>أدلة <span class="grad">استرجاع حساب انستقرام</span></h1><p>كل مشكلة لها مسار مختلف. اختر حالتك واتبع الخطوات.</p></div>
+      <div class="grid">
+        {posts.map((p) => (
+          <article class="card reveal"><h2 style="font-size:1.2rem"><a href={`/blog/${p.id}/`} style="text-decoration:none">{p.data.title}</a></h2><p>{p.data.description}</p><a class="more" href={`/blog/${p.id}/`}>اقرأ الدليل<span class="sr">: {p.data.title}</span></a></article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

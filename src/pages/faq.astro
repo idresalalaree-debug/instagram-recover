@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import Wa from '../components/Wa.astro';
+import { FAQ_CORE, FAQ_EXTRA } from '../data/faq';
+const all = [...FAQ_CORE, ...FAQ_EXTRA];
+const schema = [{
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: all.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+}];
+---
+<Base title="أسئلة شائعة عن استرجاع حساب انستقرام | انستقرام ركيفري" description="إجابات واضحة عن استرجاع حساب انستقرام: المدة، التكلفة، الحساب المعطل والمخترق والمحذوف، الاسترجاع بدون إيميل أو رقم، والتحقق بخطوتين." schema={schema}>
+  <section style="padding-top:48px">
+    <div class="wrap">
+      <div class="head"><h1>الأسئلة الشائعة عن <span class="grad">استرجاع حساب انستقرام</span></h1><p>لم تجد إجابتك؟ اسألنا مباشرة على واتساب.</p><Wa size="sm" /></div>
+      <Faq items={all} open />
+    </div>
+  </section>
+</Base>

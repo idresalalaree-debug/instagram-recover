@@ -1,0 +1,128 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import Wa from '../components/Wa.astro';
+import WaIcon from '../components/WaIcon.astro';
+import { SITE, NAV, waLink } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  schema?: Record<string, unknown>[];
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+const { title, description, schema = [], type = 'website', noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const og = `${SITE.url}/og.png`;
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${SITE.url}/#org`,
+  name: SITE.name,
+  alternateName: SITE.nameEn,
+  url: SITE.url + '/',
+  logo: `${SITE.url}/icon-512.png`,
+  image: og,
+  description: SITE.description,
+  telephone: SITE.phone,
+  address: { '@type': 'PostalAddress', addressCountry: 'JO' },
+  areaServed: ['الأردن', 'السعودية', 'الإمارات', 'الكويت', 'قطر', 'البحرين', 'عُمان', 'مصر', 'العراق', 'فلسطين', 'لبنان', 'سوريا', 'المغرب', 'الجزائر', 'تونس', 'ليبيا', 'اليمن', 'السودان'].map((name) => ({ '@type': 'Country', name })),
+  availableLanguage: ['ar', 'en'],
+  contactPoint: { '@type': 'ContactPoint', telephone: SITE.phone, contactType: 'customer support', availableLanguage: ['ar', 'en'], url: waLink() },
+};
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: SITE.url + '/',
+  name: SITE.name,
+  inLanguage: 'ar',
+  publisher: { '@id': `${SITE.url}/#org` },
+};
+const ld = [org, website, ...schema];
+---
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex" />}
+  <meta name="theme-color" content="#07070d" />
+  <link rel="preload" href="/fonts/readex-pro-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+  <meta property="og:type" content={type} />
+  <meta property="og:locale" content="ar_AR" />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={og} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+</head>
+<body>
+  <a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="hdr">
+    <div class="wrap">
+      <a class="logo" href="/" aria-label={`${SITE.name}، الصفحة الرئيسية`}><Logo /><span>انستقرام <span class="grad">ركيفري</span></span></a>
+      <nav class="nav" aria-label="القائمة الرئيسية">
+        {NAV.map((n) => <a href={n.href}>{n.label}</a>)}
+      </nav>
+      <Wa size="sm" label="واتساب" />
+      <details class="menu">
+        <summary aria-label="فتح القائمة"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+        <nav aria-label="قائمة الجوال">
+          {NAV.map((n) => <a href={n.href}>{n.label}</a>)}
+          <a href={waLink()} target="_blank" rel="noopener" data-wa>تواصل عبر واتساب</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main"><slot /></main>
+
+  <footer class="ftr">
+    <div class="wrap">
+      <div>
+        <a class="logo" href="/"><Logo /><span>انستقرام ركيفري</span></a>
+        <p style="margin-top:14px">{SITE.description}</p>
+        <Wa size="sm" />
+      </div>
+      <div>
+        <h3>الخدمات</h3>
+        <ul>
+          <li><a href="/blog/disabled-instagram-account/">استرجاع حساب معطل</a></li>
+          <li><a href="/blog/hacked-instagram-account/">استرجاع حساب مخترق</a></li>
+          <li><a href="/blog/suspended-instagram-account/">حساب موقوف أو معلّق</a></li>
+          <li><a href="/blog/recover-without-email-or-phone/">بدون إيميل أو رقم</a></li>
+          <li><a href="/blog/deleted-instagram-account/">استرجاع حساب محذوف</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>روابط</h3>
+        <ul>
+          <li><a href="/faq/">الأسئلة الشائعة</a></li>
+          <li><a href="/blog/">المقالات</a></li>
+          <li><a href="/about/">من نحن</a></li>
+          <li><a href="/privacy/">سياسة الخصوصية</a></li>
+          <li><a href="/terms/">الشروط والأحكام</a></li>
+        </ul>
+      </div>
+      <p class="legal">© {new Date().getFullYear()} انستقرام ركيفري. خدمة مستقلة لمساعدة أصحاب الحسابات، وليست تابعة لشركة Meta أو Instagram ولا مرتبطة بهما. Instagram علامة تجارية مملوكة لشركة Meta Platforms, Inc.</p>
+    </div>
+  </footer>
+
+  <a class="fab" href={waLink()} target="_blank" rel="noopener" aria-label="تواصل معنا عبر واتساب" data-wa><WaIcon /></a>
+</body>
+</html>
