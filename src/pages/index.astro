@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 import { FAQ_CORE } from '../data/faq';
 import { SITE } from '../data/site';
 
-const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 6);
+const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 9);
 
 const services = [
   { t: 'استرجاع حساب انستقرام معطل', d: 'حسابك عُطّل بسبب "مخالفة" لم ترتكبها؟ نجهّز اعتراضًا صحيحًا يزيد فرصة إعادة الحساب.', href: '/blog/disabled-instagram-account/', i: '<circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/>' },
@@ -95,7 +95,7 @@ const schema = [
     <div class="wrap">
       <div class="head reveal">
         <h2>كل حالات <span class="grad">استرجاع حساب انستقرام</span></h2>
-        <p>اختر الحالة الأقرب لمشكلتك لتعرف ما يحدث وما الذي يمكن فعله، أو راسلنا مباشرة ونحدد الحالة معك.</p>
+        <p>سواء كتبتها انستقرام أو انستغرام أو انستا، اختر الحالة الأقرب لمشكلتك لتعرف ما يحدث وما الذي يمكن فعله، أو راسلنا مباشرة ونحدد الحالة معك.</p>
       </div>
       <div class="grid">
         {services.map((s) => (
