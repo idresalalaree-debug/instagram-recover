@@ -1,0 +1,127 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><style>
+@font-face{font-family:R;src:url(../public/fonts/readex-pro-arabic-wght-normal.woff2);font-weight:160 700}
+@font-face{font-family:R;src:url(../public/fonts/readex-pro-latin-wght-normal.woff2);font-weight:160 700;unicode-range:U+0000-00FF,U+2000-206F}
+*{box-sizing:border-box}
+body{margin:0;font-family:R;color:#fff}
+.scene{width:1200px;height:900px;position:relative;overflow:hidden;background:#05050a;display:none}
+.scene.on{display:block}
+.bg{position:absolute;inset:0}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse 70% 65% at 50% 50%,transparent 40%,rgba(0,0,0,.85) 100%)}
+.grain{position:absolute;inset:-50%;opacity:.07;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.bars:before,.bars:after{content:'';position:absolute;left:0;right:0;height:56px;background:#000;z-index:9}
+.bars:before{top:0}.bars:after{bottom:0}
+.bokeh i{position:absolute;border-radius:50%;filter:blur(2px)}
+.stage{position:absolute;inset:0;display:flex;direction:ltr;align-items:center;justify-content:center;perspective:1600px}
+.phone{direction:rtl;width:340px;height:690px;border-radius:52px;background:#0b0b12;border:2px solid #2a2836;box-shadow:0 0 0 10px #15141d,0 60px 120px -20px rgba(0,0,0,.9),0 0 160px -20px var(--glow);position:relative;overflow:hidden;transform:rotateY(var(--ry,-14deg)) rotateX(6deg) rotateZ(var(--rz,1deg))}
+.phone:before{content:'';position:absolute;top:14px;left:50%;transform:translateX(-50%);width:110px;height:30px;border-radius:20px;background:#000;z-index:5}
+.scr{position:absolute;inset:0;padding:70px 24px 28px;display:flex;flex-direction:column}
+.reflect{position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.14),transparent 35%);pointer-events:none;z-index:6}
+.time{position:absolute;top:20px;right:34px;font-size:15px;font-weight:600;opacity:.9;direction:ltr}
+.cap{position:absolute;z-index:8;top:50%;transform:translateY(-50%);right:110px;max-width:440px}
+.cap h2{font-size:56px!important}
+.cap p{font-size:20px;opacity:.7;line-height:1.7;margin:18px 0 0}
+.cap b{display:block;font-size:20px;letter-spacing:.2em;opacity:.6;font-weight:500;margin-bottom:8px}
+.cap h2{margin:0;font-size:46px;line-height:1.25;font-weight:700}
+.g{background:linear-gradient(120deg,#f58529,#dd2a7b 45%,#8134af 75%,#515bd4);-webkit-background-clip:text;color:transparent}
+.card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:16px}
+.btn{border-radius:12px;padding:13px;text-align:center;font-weight:600;font-size:15px}
+body.clean .cap{display:none}body.clean .scene{width:900px;height:900px}body.clean .stage{justify-content:center!important;padding:0!important;zoom:1.2}body.clean .bars:before,body.clean .bars:after{height:34px}body.clean .bg{background-position:0 0}
+</style></head><body>
+
+<!-- 1 shock -->
+<section class="scene bars" id="s1" style="--glow:rgba(255,40,60,.55)">
+ <div class="bg" style="background:radial-gradient(circle at 30% 52%,rgba(255,40,60,.32),transparent 45%),radial-gradient(circle at 80% 10%,#1a0d22,transparent 50%),#05050a"></div>
+ <div class="bokeh"><i style="width:14px;height:14px;background:#ff4060;top:180px;left:160px;opacity:.5"></i><i style="width:26px;height:26px;background:#dd2a7b;top:640px;left:260px;opacity:.3;filter:blur(6px)"></i><i style="width:10px;height:10px;background:#ff8a50;top:300px;left:980px;opacity:.6"></i><i style="width:40px;height:40px;background:#8134af;top:120px;left:900px;opacity:.25;filter:blur(10px)"></i></div>
+ <div class="stage" style="justify-content:flex-start;padding-left:170px"><div class="phone" style="--ry:16deg;--rz:-2deg"><div class="time">2:14</div><div class="reflect"></div>
+  <div class="scr" style="align-items:center;text-align:center;justify-content:center;gap:18px">
+   <div style="width:92px;height:92px;border-radius:50%;border:3px solid #ff4060;display:grid;place-items:center;box-shadow:0 0 50px rgba(255,64,96,.6)"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#ff4060" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></svg></div>
+   <div style="font-size:24px;font-weight:700">تم تعطيل حسابك</div>
+   <div style="font-size:15px;opacity:.65;line-height:1.7">لا يمكنك الوصول إلى حسابك حاليًا. قد تفقد صورك ومتابعيك.</div>
+   <div class="btn" style="background:#ff4060;width:100%;margin-top:14px">طلب مراجعة</div>
+   <div style="font-size:13px;opacity:.45">تسجيل الخروج</div>
+  </div></div></div>
+ <div class="cap"><b>المشهد ١</b><h2>منتصف الليل.<br><span style="color:#ff6078">حسابك اختفى.</span></h2></div>
+ <div class="grain"></div><div class="vig"></div>
+</section>
+
+<!-- 2 contact -->
+<section class="scene bars" id="s2" style="--glow:rgba(37,211,102,.5)">
+ <div class="bg" style="background:radial-gradient(circle at 30% 52%,rgba(37,211,102,.25),transparent 45%),radial-gradient(circle at 15% 85%,#0b1d16,transparent 50%),#05050a"></div>
+ <div class="bokeh"><i style="width:18px;height:18px;background:#25d366;top:200px;left:1000px;opacity:.4"></i><i style="width:34px;height:34px;background:#2ee27a;top:690px;left:900px;opacity:.2;filter:blur(8px)"></i><i style="width:12px;height:12px;background:#9ff5c2;top:150px;left:260px;opacity:.5"></i></div>
+ <div class="stage" style="justify-content:flex-start;padding-left:170px"><div class="phone" style="--ry:14deg"><div class="time">2:21</div><div class="reflect"></div>
+  <div class="scr" style="padding:56px 0 0;background:#0b141a">
+   <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#1f2c34"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#dd2a7b,#8134af)"></div><div><div style="font-weight:600;font-size:16px">انستقرام ركيفري</div><div style="font-size:12px;color:#25d366">متصل الآن</div></div></div>
+   <div style="padding:18px 16px;display:flex;flex-direction:column;gap:12px;font-size:14.5px;line-height:1.6">
+    <div style="align-self:flex-start;background:#005c4b;padding:10px 14px;border-radius:14px 14px 14px 4px;max-width:82%">مرحبًا، حسابي على انستقرام انعطل فجأة 😔</div>
+    <div style="align-self:flex-start;background:#005c4b;padding:6px;border-radius:14px;width:120px;height:80px;display:grid;place-items:center"><div style="width:100%;height:100%;border-radius:10px;background:linear-gradient(135deg,#3a0b14,#14070c);display:grid;place-items:center;font-size:11px;color:#ff6078">لقطة الشاشة</div></div>
+    <div style="align-self:flex-end;background:#1f2c34;padding:10px 14px;border-radius:14px 14px 4px 14px;max-width:82%">أهلًا بك 🌿 وصلت الصورة. لا تقلق، سنراجع حالتك الآن ونخبرك بالخطوة الصحيحة.</div>
+    <div style="align-self:flex-end;background:#1f2c34;padding:10px 16px;border-radius:14px;font-size:20px;letter-spacing:4px">•••</div>
+   </div></div></div></div>
+ <div class="cap"><b>المشهد ٢</b><h2>رسالة واحدة<br><span style="color:#3ee68a">على واتساب.</span></h2></div>
+ <div class="grain"></div><div class="vig"></div>
+</section>
+
+<!-- 3 plan -->
+<section class="scene bars" id="s3" style="--glow:rgba(129,52,175,.6)">
+ <div class="bg" style="background:radial-gradient(circle at 30% 50%,rgba(129,52,175,.35),transparent 45%),radial-gradient(circle at 90% 90%,#0d0f2a,transparent 50%),#05050a"></div>
+ <div class="bokeh"><i style="width:16px;height:16px;background:#515bd4;top:220px;left:980px;opacity:.5"></i><i style="width:30px;height:30px;background:#8134af;top:700px;left:180px;opacity:.3;filter:blur(8px)"></i><i style="width:10px;height:10px;background:#c7b8ff;top:140px;left:640px;opacity:.6"></i></div>
+ <div class="stage" style="justify-content:flex-start;padding-left:170px"><div class="phone" style="--ry:12deg"><div class="time">10:05</div><div class="reflect"></div>
+  <div class="scr" style="gap:14px">
+   <div style="font-size:13px;opacity:.55">تقييم الحالة</div>
+   <div style="font-size:22px;font-weight:700">خطة استرجاع حسابك</div>
+   <div class="card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:14px;opacity:.7">فرصة الاسترجاع</span><span style="font-weight:700;font-size:18px" class="g">جيدة</span></div>
+   <div class="card" style="display:flex;flex-direction:column;gap:14px;font-size:14.5px">
+    <div style="display:flex;gap:10px;align-items:center"><span style="width:24px;height:24px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:13px;color:#04210f">✓</span>تحديد نوع التعطيل</div>
+    <div style="display:flex;gap:10px;align-items:center"><span style="width:24px;height:24px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:13px;color:#04210f">✓</span>تجهيز بيانات الملكية</div>
+    <div style="display:flex;gap:10px;align-items:center"><span style="width:24px;height:24px;border-radius:50%;border:2px solid #dd2a7b;box-shadow:0 0 14px #dd2a7b"></span>تقديم طلب المراجعة</div>
+    <div style="display:flex;gap:10px;align-items:center;opacity:.45"><span style="width:24px;height:24px;border-radius:50%;border:2px solid #555"></span>التحقق من الهوية</div>
+    <div style="display:flex;gap:10px;align-items:center;opacity:.45"><span style="width:24px;height:24px;border-radius:50%;border:2px solid #555"></span>تأمين الحساب</div>
+   </div>
+   <div style="height:8px;border-radius:8px;background:#1d1b28;overflow:hidden"><div style="width:48%;height:100%;background:linear-gradient(90deg,#f58529,#dd2a7b,#8134af)"></div></div>
+  </div></div></div>
+ <div class="cap"><b>المشهد ٣</b><h2>خطة واضحة.<br><span class="g">بلا تخمين.</span></h2></div>
+ <div class="grain"></div><div class="vig"></div>
+</section>
+
+<!-- 4 verify -->
+<section class="scene bars" id="s4" style="--glow:rgba(81,91,212,.65)">
+ <div class="bg" style="background:radial-gradient(circle at 30% 50%,rgba(81,91,212,.35),transparent 45%),radial-gradient(circle at 10% 10%,#0a1830,transparent 50%),#05050a"></div>
+ <div class="bokeh"><i style="width:20px;height:20px;background:#7aa2ff;top:180px;left:1020px;opacity:.4"></i><i style="width:12px;height:12px;background:#515bd4;top:660px;left:240px;opacity:.6"></i><i style="width:36px;height:36px;background:#3a4bd0;top:500px;left:1060px;opacity:.2;filter:blur(9px)"></i></div>
+ <div class="stage" style="justify-content:flex-start;padding-left:170px"><div class="phone" style="--ry:15deg"><div class="time">10:32</div><div class="reflect"></div>
+  <div class="scr" style="align-items:center;text-align:center;gap:16px">
+   <div style="font-size:20px;font-weight:700;margin-top:8px">تأكيد الهوية</div>
+   <div style="font-size:14px;opacity:.6">أدر رأسك ببطء</div>
+   <div style="position:relative;width:230px;height:230px;margin:18px 0">
+    <div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(#7aa2ff 0 72%,rgba(255,255,255,.1) 72%);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 7px),#000 calc(100% - 6px));filter:drop-shadow(0 0 16px #7aa2ff)"></div>
+    <div style="position:absolute;inset:16px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#3b3f6b,#141628 70%);overflow:hidden"><svg viewBox="0 0 100 100" style="width:100%;height:100%"><circle cx="50" cy="40" r="17" fill="#6b70a8"/><path d="M18 100c2-22 16-32 32-32s30 10 32 32" fill="#6b70a8"/></svg></div>
+    <div style="position:absolute;left:10%;right:10%;top:45%;height:2px;background:linear-gradient(90deg,transparent,#9fc0ff,transparent);box-shadow:0 0 14px #9fc0ff"></div>
+   </div>
+   <div style="font-size:15px;font-weight:600;color:#9fc0ff">٧٢٪ جارِ التحقق...</div>
+   <div style="font-size:12.5px;opacity:.45;line-height:1.7">يُستخدم الفيديو للتحقق فقط<br>ولا يظهر على حسابك</div>
+  </div></div></div>
+ <div class="cap"><b>المشهد ٤</b><h2>نثبت أنك<br><span style="color:#9fc0ff">صاحب الحساب.</span></h2></div>
+ <div class="grain"></div><div class="vig"></div>
+</section>
+
+<!-- 5 restored -->
+<section class="scene bars" id="s5" style="--glow:rgba(245,133,41,.6)">
+ <div class="bg" style="background:radial-gradient(circle at 30% 50%,rgba(221,42,123,.35),transparent 42%),radial-gradient(circle at 30% 50%,rgba(245,133,41,.25),transparent 60%),#05050a"></div>
+ <div class="bokeh"><i style="width:14px;height:14px;background:#f58529;top:160px;left:1000px;opacity:.7"></i><i style="width:10px;height:10px;background:#ffd36b;top:250px;left:220px;opacity:.8"></i><i style="width:28px;height:28px;background:#dd2a7b;top:720px;left:1040px;opacity:.35;filter:blur(6px)"></i><i style="width:8px;height:8px;background:#fff;top:120px;left:600px;opacity:.7"></i><i style="width:12px;height:12px;background:#ffb36b;top:640px;left:320px;opacity:.6"></i></div>
+ <div class="stage" style="justify-content:flex-start;padding-left:170px"><div class="phone" style="--ry:10deg;--rz:-1deg"><div class="time">9:41</div><div class="reflect"></div>
+  <div class="scr" style="gap:14px">
+   <div style="background:rgba(37,211,102,.14);border:1px solid rgba(37,211,102,.45);border-radius:16px;padding:12px 14px;display:flex;gap:10px;align-items:center;font-size:14px"><span style="width:28px;height:28px;border-radius:50%;background:#25d366;display:grid;place-items:center;color:#04210f;font-weight:700">✓</span>تمت إعادة حسابك بنجاح</div>
+   <div style="display:flex;align-items:center;gap:16px;margin-top:10px">
+    <div style="width:86px;height:86px;border-radius:50%;padding:4px;background:conic-gradient(#f58529,#dd2a7b,#8134af,#515bd4,#f58529);box-shadow:0 0 40px rgba(221,42,123,.7)"><div style="width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 40% 35%,#4a3a55,#1a1422);border:3px solid #0b0b12"></div></div>
+    <div style="display:flex;gap:18px;text-align:center;font-size:12px;opacity:.85"><div><b style="font-size:17px;display:block">٢٤٨</b>منشور</div><div><b style="font-size:17px;display:block">١٢٫٤ ألف</b>متابِع</div><div><b style="font-size:17px;display:block">٥١٢</b>متابَع</div></div>
+   </div>
+   <div style="font-weight:600">حسابك عاد كما كان</div>
+   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px">
+    <div style="aspect-ratio:1;background:linear-gradient(135deg,#f58529,#dd2a7b)"></div><div style="aspect-ratio:1;background:linear-gradient(135deg,#8134af,#515bd4)"></div><div style="aspect-ratio:1;background:linear-gradient(135deg,#dd2a7b,#8134af)"></div>
+    <div style="aspect-ratio:1;background:linear-gradient(135deg,#515bd4,#25d3c0)"></div><div style="aspect-ratio:1;background:linear-gradient(135deg,#f5b829,#f58529)"></div><div style="aspect-ratio:1;background:linear-gradient(135deg,#2a2440,#8134af)"></div>
+   </div>
+   <div class="btn" style="background:rgba(255,255,255,.08);font-size:13.5px">🔒 التحقق بخطوتين مفعّل</div>
+  </div></div></div>
+ <div class="cap"><b>المشهد ٥</b><h2>صباح جديد.<br><span class="g">حسابك عاد.</span></h2></div>
+ <div class="grain"></div><div class="vig"></div>
+</section>
+</body></html>

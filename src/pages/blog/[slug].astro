@@ -14,7 +14,14 @@ const { Content, headings } = await render(post);
 const d = post.data;
 const url = `${SITE.url}/blog/${post.id}/`;
 const fmt = (x: Date) => x.toLocaleDateString('ar', { year: 'numeric', month: 'long', day: 'numeric' });
-const related = all.filter((p) => p.id !== post.id).slice(0, 3);
+const words = (t: string) => new Set(t.split(/\s+/).filter((w) => w.length > 3 && !/انستقرام|انستا|حساب/.test(w)));
+const mine = words(d.keyword + ' ' + d.title);
+const related = all
+  .filter((p) => p.id !== post.id)
+  .map((p) => ({ p, score: [...words(p.data.keyword + ' ' + p.data.title)].filter((w) => mine.has(w)).length }))
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 3)
+  .map((x) => x.p);
 const toc = headings.filter((h) => h.depth === 2);
 
 const schema: Record<string, unknown>[] = [
@@ -31,6 +38,7 @@ const schema: Record<string, unknown>[] = [
     author: { '@id': `${SITE.url}/#org` },
     publisher: { '@id': `${SITE.url}/#org` },
     about: d.keyword,
+    ...(d.answer ? { abstract: d.answer } : {}),
   },
   {
     '@context': 'https://schema.org',
@@ -59,6 +67,7 @@ if (d.faq.length)
         <h1>{d.title}</h1>
         <p class="meta"><span>آخر تحديث: <time datetime={(d.updated ?? d.date).toISOString()}>{fmt(d.updated ?? d.date)}</time></span><span>فريق انستقرام ركيفري</span></p>
         <p class="muted" style="font-size:1.15rem">{d.description}</p>
+        {d.answer && <div class="answer"><strong>الجواب المختصر</strong><p>{d.answer}</p></div>}
         <div class="inline-cta"><p>تريد حلًا أسرع؟ أرسل حالتك ونخبرك بفرص الاسترجاع.</p><Wa size="sm" label="اسألنا على واتساب" msg={`مرحبًا، قرأت مقال "${d.title}" وأحتاج مساعدة في حسابي`} /></div>
         {toc.length > 2 && (
           <nav aria-label="محتويات المقال" class="card" style="margin-bottom:2em">
